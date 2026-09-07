@@ -12,37 +12,64 @@
   <header>
     <h1>게임 소개 서비스</h1>
     <p>새로 출시 혹은 출시 예정인 게임들을 소개합니다.</p>
+
+    <nav aria-label="메인 메뉴">
+      <ul>
+        <a href="#about">서비스 소개</a>
+        <a href="#features">신작 게임</a>
+        <a href="#steps">이용 방법</a>
+        <a href="#subscribe">게임 소식 받기</a>
+      </ul>
   </header>
 
-  <h2>서비스 소개</h2>
-  <h3>주목받고 있는 신작게임/ 출시 예정 게임 안내</h3>
-  
-  <img src="assets/images/service.jpg" alt="GameHub 로고" width="200">
-  
-  <h2>신작 게임</h2>
-  <ul>
-    <li>
-      <h3>게임 A</h3>
-      <p>출시일 - 2026년 7월 15일</p>
-    </li>
-    <li>
-      <h3>게임 B</h3>
-      <p>출시일 - 2026년 8월 20일</p>
-    </li>
-    <li>
-      <h3>게임 C</h3>
-      <p>출시일 - 2026년 9월 5일</p>
-    </li>
-  </ul>
+  <main>
+    <section id="about">
+      <h2>서비스 소개</h2>
+      <h3>주목받고 있는 신작게임/ 출시 예정 게임 안내</h3>
 
-  <h2>이용 방법</h2>
-  <ol>
-    <li>게임 소개 서비스에 접속합니다.</li>
-    <li>신작 게임 목록을 확인합니다.</li>
-    <li>관심 있는 게임을 선택하여 상세 정보를 확인합니다.</li>
-    <li>출시일에 맞춰 게임을 즐깁니다.</li>
-  </ol>
+      <img src="assets/images/service.jpg" alt="GameHub 로고" width="200">
+      <p> 신작/출시 예정 게임들을 소개합니다.</p>
+      <p> 게임들을 확인해보세요.</p>
+    </section>
+    <section id="features">
+      <h2>신작 게임</h2>
+      <ul>
+        <li>
+          <h3>게임 A</h3>
+          <p>출시일 - 2026년 7월 15일</p>
+        </li>
+        <li>
+          <h3>게임 B</h3>
+          <p>출시일 - 2026년 8월 20일</p>
+        </li>
+        <li>
+          <h3>게임 C</h3>
+          <p>출시일 - 2026년 9월 5일</p>
+        </li>
+      </ul>
+    </section>
+    <section id="steps">
+      <h2>이용 방법</h2>
+      <ol>
+        <li>게임 소개 서비스에 접속합니다.</li>
+        <li>신작 게임 목록을 확인합니다.</li>
+        <li>관심 있는 게임을 선택하여 상세 정보를 확인합니다.</li>
+        <li>출시일에 맞춰 게임을 즐깁니다.</li>
+      </ol>
+    </section>
+    <section id="subscribe">
+      <h2>게임 소식 받기</h2>
+      <form>
+        <label for="email">이메일 주소:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">구독하기</button>
+      </form>
+    </section>
+  </main>
 
+  <footer>
+    <small>&copy; 2023 GameHub</small>
+  </footer>
 
 </body>
 
