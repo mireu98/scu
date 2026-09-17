@@ -46,6 +46,7 @@ nav {
 nav a {
     color: #5b5870;
     font-weight: 700;
+    text-decoration: none;
 }
 
 h1 {
