@@ -7,7 +7,6 @@ function makeSubscribeMessage(email, subscribe) {
     if (subscribe) {
         return email + "로 신청이 완료되었습니다.";
     }
-
     return "이메일을 입력한 뒤 신청해주세요.";
 }
 
@@ -46,7 +45,6 @@ const startButton = document.querySelector("#startButton");
 
 function handleThemeClick() {
     const isDark = document.body.classList.toggle("dark");
-
     themeButton.textContent = isDark ? "라이트 모드" : "다크 모드";
 }
 
@@ -124,9 +122,22 @@ const restartButton = document.querySelector("#restart-button");
 const summaryTitle = document.querySelector("#summary-title");
 const summaryType = document.querySelector("#summary-type");
 
+// 4단계용
+const resultGameTitle = document.querySelector("#result-game-title");
+const resultGameDesc = document.querySelector("#result-game-desc");
+const wishlistBtn = document.querySelector("#wishlist-btn");
+
 const formData = {
     title: "", 
     type: ""
+};
+
+// [장르별 가상 게임]
+const mockGameData = {
+    action: { title: "네온 대쉬", desc: "화려한 콤보 액션과 손에 땀을 쥐는 보스 전투가 특징인 게임입니다." },
+    adventure: { title: "던전 이스케이프", desc: "넓은 던전를 탐험하며 비밀을 파헤치는 어드벤처 게임입니다." },
+    rpg: { title: "더 라스트 워리어", desc: "캐릭터를 육성하며 플레이를 즐기는 정통 RPG입니다." },
+    strategy: { title: "그로우 히어로 어드밴쳐", desc: "자원을 관리하고 부대를 배치해 적의 진영을 함락시키는 전략 게임입니다." }
 };
 
 function showStep(index) {
@@ -144,7 +155,7 @@ const searchConfirm = document.querySelector("#search-confirm");
 
 function revokeSearchAgreement() {
     agreeCheck.checked = false;
-    searchFlow.hidden = false;
+    searchFlow.hidden = true;
     handleAgreeChange();
     agreeCheck.focus();
 }
@@ -159,6 +170,7 @@ searchCancel.addEventListener("click", ()=>{
     revokeSearchAgreement();
 });
 searchDialog.addEventListener("cancel", revokeSearchAgreement);
+
 searchConfirm.addEventListener("click", ()=>{
     if(!agreeCheck.checked) return;
     searchDialog.close();
@@ -211,7 +223,27 @@ summaryPrev.addEventListener("click", ()=>{
 });
 
 finishButton.addEventListener("click", ()=>{
-    showStep(3);
+    const sample = mockGameData[formData.type] || { title: formData.title, desc: "사용자 맞춤형 추천 게임입니다." };
+
+    resultGameTitle.textContent = `[검색 결과] "${formData.title}" (추천 연동: ${sample.title})`;
+    resultGameDesc.textContent = sample.desc;
+    wishlistBtn.textContent = "❤️ 위시리스트 찜하기";
+    wishlistBtn.style.backgroundColor = "#635bff";
+    
+    showStep(3); 
+});
+
+// 4단계 토글
+let isWishlisted = false;
+wishlistBtn.addEventListener("click", () => {
+    isWishlisted = !isWishlisted;
+    if (isWishlisted) {
+        wishlistBtn.textContent = "💖 위시리스트 찜 완료!";
+        wishlistBtn.style.backgroundColor = "#245c3a";
+    } else {
+        wishlistBtn.textContent = "❤️ 위시리스트 찜하기";
+        wishlistBtn.style.backgroundColor = "#635bff";
+    }
 });
 
 restartButton.addEventListener("click", ()=>{
@@ -220,6 +252,7 @@ restartButton.addEventListener("click", ()=>{
     titleInput.value = "";
     titleError.textContent = "";
     titleInput.classList.remove("has-error");
+    isWishlisted = false;
     
     const defaultRadio = document.querySelector('input[name="game-type"][value="rpg"]');
     if (defaultRadio) defaultRadio.checked = true;
