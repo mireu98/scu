@@ -128,7 +128,7 @@ const resultGameDesc = document.querySelector("#result-game-desc");
 const wishlistBtn = document.querySelector("#wishlist-btn");
 
 const formData = {
-    title: "", 
+    title: "",
     type: ""
 };
 
@@ -160,19 +160,19 @@ function revokeSearchAgreement() {
     agreeCheck.focus();
 }
 
-startButton.addEventListener("click", ()=> {
-    if(!agreeCheck.checked) return;
+startButton.addEventListener("click", () => {
+    if (!agreeCheck.checked) return;
     searchDialog.showModal();
 });
 
-searchCancel.addEventListener("click", ()=>{
+searchCancel.addEventListener("click", () => {
     searchDialog.close();
     revokeSearchAgreement();
 });
 searchDialog.addEventListener("cancel", revokeSearchAgreement);
 
-searchConfirm.addEventListener("click", ()=>{
-    if(!agreeCheck.checked) return;
+searchConfirm.addEventListener("click", () => {
+    if (!agreeCheck.checked) return;
     searchDialog.close();
     searchFlow.hidden = false;
     showStep(0);
@@ -180,9 +180,9 @@ searchConfirm.addEventListener("click", ()=>{
     titleInput.focus();
 });
 
-function validateTitle(){
+function validateTitle() {
     const value = titleInput.value.trim();
-    if(!value) {
+    if (!value) {
         titleError.textContent = "게임 제목을 입력해주세요.";
         titleInput.classList.add("has-error");
         titleInput.focus();
@@ -194,43 +194,43 @@ function validateTitle(){
     return true;
 }
 
-titleNext.addEventListener("click", ()=>{
-    if(!validateTitle()) return;
-    showStep(1); 
+titleNext.addEventListener("click", () => {
+    if (!validateTitle()) return;
+    showStep(1);
 });
 
-optionPrev.addEventListener("click", ()=>{
+optionPrev.addEventListener("click", () => {
     showStep(0);
 });
 
-optionNext.addEventListener("click", ()=>{
+optionNext.addEventListener("click", () => {
     const checkedRadio = document.querySelector('input[name="game-type"]:checked');
-    
+
     if (checkedRadio) {
-        formData.type = checkedRadio.value; 
+        formData.type = checkedRadio.value;
     } else {
         formData.type = "선택 안 함";
     }
 
     summaryTitle.textContent = formData.title;
     summaryType.textContent = formData.type;
-    
-    showStep(2); 
+
+    showStep(2);
 });
 
-summaryPrev.addEventListener("click", ()=>{
+summaryPrev.addEventListener("click", () => {
     showStep(1);
 });
 
-finishButton.addEventListener("click", ()=>{
+finishButton.addEventListener("click", () => {
     const sample = mockGameData[formData.type] || { title: formData.title, desc: "사용자 맞춤형 추천 게임입니다." };
 
     resultGameTitle.textContent = `[검색 결과] "${formData.title}" (추천 연동: ${sample.title})`;
     resultGameDesc.textContent = sample.desc;
     wishlistBtn.textContent = "❤️ 위시리스트 찜하기";
     wishlistBtn.style.backgroundColor = "#635bff";
-    
-    showStep(3); 
+
+    showStep(3);
 });
 
 // 4단계 토글
@@ -246,14 +246,14 @@ wishlistBtn.addEventListener("click", () => {
     }
 });
 
-restartButton.addEventListener("click", ()=>{
+restartButton.addEventListener("click", () => {
     formData.title = "";
     formData.type = "";
     titleInput.value = "";
     titleError.textContent = "";
     titleInput.classList.remove("has-error");
     isWishlisted = false;
-    
+
     const defaultRadio = document.querySelector('input[name="game-type"][value="rpg"]');
     if (defaultRadio) defaultRadio.checked = true;
 
@@ -261,4 +261,114 @@ restartButton.addEventListener("click", ()=>{
     summaryType.textContent = "";
     showStep(0);
     searchFlow.hidden = true;
+});
+
+// --- [신작 게임 입점 신청 폼 제어 로직] ---
+
+const regForm = document.querySelector("#game-reg-form");
+const regTitleInput = document.querySelector("#reg-game-title");
+const regTitleError = document.querySelector("#reg-title-error");
+const isPaidCheckbox = document.querySelector("#is-paid-game");
+const priceContainer = document.querySelector("#price-container");
+const regPriceInput = document.querySelector("#reg-price");
+const regSubmitBtn = document.querySelector("#reg-submit-btn");
+const regResetBtn = document.querySelector("#reg-reset-btn");
+const regFeedbackMessage = document.querySelector("#reg-feedback-message");
+const regDeveloperInput = document.querySelector("#reg-developer");
+const regDeveloperError = document.querySelector("#reg-developer-error");
+const regPlatformError = document.querySelector("#reg-platform-error");
+
+
+
+// 1. 조건부 입력 구현 (유료 게임 체크 시 가격 입력창 표시 및 활성화, 해제 시 비활성화 및 숨김)
+isPaidCheckbox.addEventListener("change", () => {
+    if (isPaidCheckbox.checked) {
+        priceContainer.hidden = false;
+        regPriceInput.disabled = false; // 입력 가능 상태로 변경
+        regPriceInput.focus();
+    } else {
+        priceContainer.hidden = true;
+        regPriceInput.disabled = true;  // 비활성화 처리
+        regPriceInput.value = "";       // 값 초기화
+    }
+});
+
+// 2. 실시간 입력 검증 (글자 수 조건)
+regTitleInput.addEventListener("input", () => {
+    const val = regTitleInput.value.trim();
+    if (val.length > 0 && val.length < 2) {
+        regTitleError.textContent = "게임 이름은 최소 2글자 이상 입력해야 합니다.";
+        regTitleInput.classList.add("has-error");
+    } else {
+        regTitleError.textContent = "";
+        regTitleInput.classList.remove("has-error");
+    }
+});
+
+// 3. 폼 제출(submit) 이벤트 및 중복 제출 방지 처리
+regForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // 기본 새로고침 제출 방지
+
+    const titleVal = regTitleInput.value.trim();
+    const developerVal = regDeveloperInput.value.trim();
+
+    regFeedbackMessage.textContent = "";
+    regFeedbackMessage.className = "";
+    regTitleError.textContent = "";
+    regDeveloperError.textContent = "";
+    regPlatformError.textContent = "";
+
+    if (!titleVal || titleVal.length < 2) {
+        regTitleError.textContent = "게임 이름은 필수이며 최소 2글자 이상이어야 합니다.";
+        regTitleInput.classList.add("has-error");
+        regTitleInput.focus();
+        return;
+    }
+    regTitleInput.classList.remove("has-error");
+
+    if (!developerVal) {
+        regDeveloperError.textContent = "개발사 / 팀명을 입력해주세요.";
+        regDeveloperInput.classList.add("has-error");
+        regDeveloperInput.focus();
+        return;
+    }
+    regDeveloperInput.classList.remove("has-error");
+
+    const checkedPlatforms = document.querySelectorAll('input[name="platform"]:checked');
+    if (checkedPlatforms.length === 0) {
+        regPlatformError.textContent = "지원 플랫폼을 최소 1개 이상 선택해주세요.";
+        return;
+    }
+
+    if (titleVal.includes("금지")) {
+        regFeedbackMessage.textContent = "실패: 허용되지 않는 금지어가 포함되어 있습니다. 내용을 수정해주세요.";
+        regFeedbackMessage.className = "error";
+        return;
+    }
+
+    // 제출 중 상태 처리 (중복 제출 방지)
+    regSubmitBtn.disabled = true;
+    regSubmitBtn.textContent = "등록 심사 중...";
+    regFeedbackMessage.textContent = "서버에 입점 신청 정보를 전송하고 있습니다. 잠시만 기다려주세요.";
+    regFeedbackMessage.className = "error"; 
+
+    setTimeout(() => {
+        regFeedbackMessage.textContent = `성공: "${titleVal}" 게임의 입점 신청이 완료되었습니다! 심사 후 등록됩니다.`;
+        regFeedbackMessage.className = "success";
+
+        regSubmitBtn.disabled = false;
+        regSubmitBtn.textContent = "입점 신청하기";
+    }, 1500);
+});
+
+// 4. 작성 초기화 버튼 기능
+regResetBtn.addEventListener("click", () => {
+    regForm.reset();
+    priceContainer.hidden = true;
+    regPriceInput.disabled = true;
+    regTitleError.textContent = "";
+    regTitleInput.classList.remove("has-error");
+    regFeedbackMessage.textContent = "";
+    regFeedbackMessage.className = "";
+    regTitleInput.focus();
 });

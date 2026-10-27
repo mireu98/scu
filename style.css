@@ -111,10 +111,14 @@ p {
     border-radius: 12px;
 }
 
-form {
+#subscribe-form {
     display: flex;
     align-items: center;
     gap: 12px;
+}
+
+#game-reg-form {
+    display: block;
 }
 
 input {
@@ -384,6 +388,101 @@ body.dark .search-flow {
     background-color: #50515f;
     border-color: #2d2e38;
 }
+
+/* 신작 게임 입점 신청 폼 스타일 */
+.reg-section {
+    padding: 24px;
+    border: 1px solid #deddea;
+    border-radius: 16px;
+    background-color: #ffffff;
+    margin-top: 40px;
+}
+
+.reg-section .form-group {
+    margin-bottom: 20px;
+}
+
+.reg-section label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.reg-section label .required {
+    color: #9d243d;
+}
+
+.reg-section fieldset {
+    border: 1px solid #b8b7c5;
+    border-radius: 10px;
+    padding: 12px 16px;
+}
+
+.reg-section fieldset label {
+    font-weight: normal;
+    display: inline-block;
+    margin-right: 16px;
+}
+
+.reg-section .help-text {
+    font-size: 14px;
+    color: #7b7992;
+    margin-top: 4px;
+}
+
+.reg-section .error-message {
+    color: #9d243d;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 4px;
+    min-height: 20px;
+}
+
+.reg-section input.has-error {
+    border-color: #9d243d;
+}
+
+.reg-section .form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.reg-section .btn-secondary {
+    background-color: #b8b7c5;
+}
+
+.reg-section .btn-secondary:hover {
+    background-color: #9694a4;
+}
+
+/* 피드백 메시지 상태별 색상 */
+#reg-feedback-message {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    display: none;
+}
+
+#reg-feedback-message.success {
+    display: block;
+    color: #245c3a;
+    background-color: #e7f7ed;
+}
+
+#reg-feedback-message.error {
+    display: block;
+    color: #9d243d;
+    background-color: #fde8ec;
+}
+
+body.dark .reg-section {
+    background-color: #50515f;
+    border-color: #2d2e38;
+}
+
+
 
 @media (max-width: 768px) {
     body {

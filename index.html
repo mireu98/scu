@@ -190,6 +190,57 @@
       </section>
     </section>
 
+    <!-- 신작 게임 입점 등록 신청 폼 (새로 추가된 기능) -->
+    <section id="game-registration" class="reg-section">
+      <h2>신작 게임 입점 신청</h2>
+      <p>개발 중이거나 출시된 게임을 GameHub에 등록하고 유저들에게 소개하세요.</p>
+
+      <form id="game-reg-form" novalidate>
+        <!-- 텍스트 입력 1: 게임 이름 -->
+        <div class="form-group">
+          <label for="reg-game-title">게임 이름 <span class="required">*</span></label>
+          <input type="text" id="reg-game-title" name="gameTitle" placeholder="등록할 게임 이름을 입력하세요 (최소 2글자)" required>
+          <p id="reg-title-error" class="error-message" aria-live="polite"></p>
+        </div>
+
+        <!-- 텍스트 입력 2: 개발사/팀 이름 -->
+        <div class="form-group">
+          <label for="reg-developer">개발사 / 팀명 <span class="required">*</span></label>
+          <input type="text" id="reg-developer" name="developer" placeholder="예: 인디게임 스튜디오" required>
+          <p id="reg-developer-error" class="error-message" aria-live="polite"></p>
+        </div>
+        
+        <!-- 선택 요소: 플랫폼 (체크박스 그룹) -->
+        <fieldset class="form-group">
+          <legend>지원 플랫폼 (최소 1개 선택)</legend>
+          <label><input type="checkbox" name="platform" value="PC"> PC (Steam/Windows)</label>
+          <label><input type="checkbox" name="platform" value="Mobile"> 모바일 (iOS/Android)</label>
+          <label><input type="checkbox" name="platform" value="Console"> 콘솔 (Switch/PS)</label>
+          <p id="reg-platform-error" class="error-message" aria-live="polite"></p>
+        </fieldset>
+
+        <!-- 조건부 입력 영역 (체크박스 선택에 따라 나타나고 disabled 제어됨) -->
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="is-paid-game" name="isPaid"> 유료 게임 (사전 판매/구매 필요)
+          </label>
+        </div>
+
+        <div id="price-container" class="form-group" hidden>
+          <label for="reg-price">희망 판매 가격 (원)</label>
+          <input type="number" id="reg-price" name="price" placeholder="가격을 입력하세요 (예: 15000)" min="1000" disabled>
+          <p class="help-text">유료 게임의 경우 부가세를 포함한 원화 가격을 입력해주세요.</p>
+        </div>
+
+        <!-- 제출 버튼 및 상태 안내 -->
+        <div class="form-actions">
+          <button type="submit" id="reg-submit-btn">입점 신청하기</button>
+          <button type="button" id="reg-reset-btn" class="btn-secondary">작성 초기화</button>
+        </div>
+        <p id="reg-feedback-message" aria-live="polite"></p>
+      </form>
+    </section>
+
     <section id="subscribe" class="subscribe-card">
       <h2>게임 소식 받기</h2>
       <form id="subscribe-form">
