@@ -372,3 +372,39 @@ regResetBtn.addEventListener("click", () => {
     regFeedbackMessage.className = "";
     regTitleInput.focus();
 });
+
+const navLinks = document.querySelectorAll(".main-nav a");
+
+function updateCurrentNav() {
+    const currentHash = window.location.hash;
+
+    navLinks.forEach((link) => {
+        const current = currentHash? link.getAttribute("href") === currentHash : link.getAttribute("href") === navLinks[0];
+        link.classList.toggle("is-current", current);
+        if(current) {
+            link.setAttribute("aria-current", "page");
+        }else {
+            link.removeAttribute("aria-current");
+        }
+    });
+}
+
+window.addEventListener("hashchange", updateCurrentNav);
+updateCurrentNav();
+
+const menuToggle = document.querySelector("#menu-toggle");
+const mainNav = document.querySelector("#main-nav");
+
+menuToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.toggle("is-open");
+    menuToggle.textContent = isOpen ? "메뉴 닫기" : "메뉴 열기";
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+        mainNav.classList.remove("is-open");
+        menuToggle.textContent = "메뉴 열기";
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
