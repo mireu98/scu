@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameHub</title>
+  <title>GameHub - 신작 및 출시 예정 게임 소개</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
@@ -13,16 +13,11 @@
 </head>
 
 <body>
-  <!-- 신작/출시 예정 게임 소개 서비스
-    1. 주요사용자 : 게임을 좋아하는 사람들, 신작 게임에 관심 있는 사람들
-    2. 서비스 목적 : 신작 게임과 출시 예정 게임을 소개하여 사용자들이
-    3. 핵심 행동 : 신작 게임과 출시 예정 게임을 확인하고, 관심 있는 게임을 선택하여 상세 정보를 확인하는 것 
-  -->
-
   <header>
-    <h1>게임 소개 서비스</h1>
+    <h1>게임 소개 서비스 (GameHub)</h1>
     <p>새로 출시 혹은 출시 예정인 게임들을 소개합니다.</p>
 
+    <!-- [접근성 개선] 모바일 메뉴 토글 버튼에 aria-expanded 및 aria-controls 추가 -->
     <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">
       메뉴 열기
     </button>
@@ -40,17 +35,18 @@
   <main>
     <section id="about">
       <h2>서비스 소개</h2>
-      <h3>주목받고 있는 신작게임/ 출시 예정 게임 안내</h3>
+      <h3>주목받고 있는 신작게임 / 출시 예정 게임 안내</h3>
 
-      <img src="assets/images/service.jpg" alt="GameHub 로고">
-      <p> 신작/출시 예정 게임들을 소개합니다.</p>
-      <p> 게임들을 확인해보세요.</p>
+      <!-- [접근성 개선] 이미지 alt 텍스트 구체화 -->
+      <img src="assets/images/service.jpg" alt="GameHub 서비스 로고 및 대표 일러스트 이미지">
+      <p>신작 및 출시 예정 게임들을 한눈에 소개합니다.</p>
+      <p>관심 있는 게임을 확인하고 상세 정보를 살펴보세요.</p>
     </section>
 
     <section id="features">
       <h2>신작 게임</h2>
 
-      <div class="tabs" role="tablist" aria-label="신작 게임 탭">
+      <div class="tabs" role="tablist" aria-label="신작 게임 탭 목록">
         <button id="tab-gameA" class="tab is-active" type="button" role="tab" aria-selected="true"
           aria-controls="features-gameA" data-target="#features-gameA">
           신작 게임 A
@@ -58,30 +54,29 @@
 
         <button id="tab-gameB" class="tab" type="button" role="tab" aria-selected="false" aria-controls="features-gameB"
           data-target="#features-gameB">
-          신작게임 B
+          신작 게임 B
         </button>
 
         <button id="tab-gameC" class="tab" type="button" role="tab" aria-selected="false" aria-controls="features-gameC"
           data-target="#features-gameC">
-          신작게임 C
+          신작 게임 C
         </button>
       </div>
 
       <div id="features-gameA" class="panel is-active" role="tabpanel" aria-labelledby="tab-gameA">
-        <h3>신작 게임 A</h3>
+        <h3>신작 게임 A 상세 정보</h3>
         <p>신작 게임 A에 대한 소개입니다.</p>
       </div>
 
       <div id="features-gameB" class="panel" role="tabpanel" aria-labelledby="tab-gameB" hidden>
-        <h3>신작 게임 B</h3>
+        <h3>신작 게임 B 상세 정보</h3>
         <p>신작 게임 B에 대한 소개입니다.</p>
       </div>
 
       <div id="features-gameC" class="panel" role="tabpanel" aria-labelledby="tab-gameC" hidden>
-        <h3>신작 게임 C</h3>
+        <h3>신작 게임 C 상세 정보</h3>
         <p>신작 게임 C에 대한 소개입니다.</p>
       </div>
-
     </section>
 
     <section id="steps">
@@ -95,69 +90,70 @@
     </section>
 
     <section id="event-practice">
-      <h2>홈페이지 설정</h2>
+      <h2>홈페이지 설정 및 참여</h2>
 
       <div class="event-grid">
         <article class="event-card">
           <h3>화면 테마</h3>
-          <button id="themeButton" type="button">다크 모드</button>
+          <!-- [접근성 개선] 토글 상태 전달을 위해 aria-pressed 속성 추가 -->
+          <button id="themeButton" type="button" aria-pressed="false">다크 모드 켜기</button>
         </article>
 
         <article class="event-card">
           <h3>사용자 정보</h3>
-          <label for="nickname"> 사용자 이름 </label>
-          <input type="text" id="nickname" maxlength="10">
-          <p id="nicknameCount" aria-live="polite">0 / 10</p>
+          <label for="nickname">사용자 이름 (최대 10자)</label>
+          <input type="text" id="nickname" maxlength="10" aria-describedby="nicknameCount">
+          <p id="nicknameCount" aria-live="polite">현재 입력 글자수: 0 / 10</p>
         </article>
 
         <article class="event-card">
           <h3>이벤트 참여 동의</h3>
           <label class="agree-row">
             <input type="checkbox" id="agreeCheck">
-            게임 이벤트 참여에 동의합니다
+            게임 이벤트 참여에 동의합니다 (필수)
           </label>
           <p id="agreeMessage" aria-live="polite">
-            동의 후 참여할 수 있습니다.
+            상태: 동의 후 참여할 수 있습니다.
           </p>
           <button id="startButton" type="button" disabled>
-            참여하기
+            참여하기 (동의 필요)
           </button>
         </article>
       </div>
     </section>
 
     <dialog id="search-dialog" aria-labelledby="search-title" aria-describedby="search-description">
-      <h2 id="search-title">게임 검색</h2>
-      <p id="search-description">원하는 게임을 검색해보세요.</p>
+      <h2 id="search-title">게임 검색창</h2>
+      <p id="search-description">원하는 게임 이름을 입력하고 검색을 시작해보세요.</p>
       <div class="dialog-actions">
-        <button id="search-cancel" type="button">취소</button>
-        <button id="search-confirm" type="button">검색하기</button>
+        <button id="search-cancel" type="button">검색 취소</button>
+        <button id="search-confirm" type="button">검색 확인</button>
       </div>
     </dialog>
 
-    <!-- 4단계 변형(위시리스트)-->
+    <!-- 검색 흐름 설정 영역 -->
     <section id="search-flow" class="search-flow" hidden>
       <h2>게임 검색 설정</h2>
-      <p class="progress" aria-label="설정 진행 단계">
-        <span class="progress-item">1。정보</span>
-        <span class="progress-item">2。조건</span>
-        <span class="progress-item">3。확인</span>
-        <span class="progress-item">4。완료</span>
+      <p class="progress" aria-label="설정 진행 단계 안내">
+        <span class="progress-item">1단계. 정보 입력</span>
+        <span class="progress-item">2단계. 조건 선택</span>
+        <span class="progress-item">3단계. 내용 확인</span>
+        <span class="progress-item">4단계. 검색 완료</span>
       </p>
 
       <section class="step" data-step="1">
-        <h3>정보 입력</h3>
-        <label for="game-name">게임 이름</label>
+        <h3>1단계: 정보 입력</h3>
+        <label for="game-name">게임 이름 <span class="required">(필수)</span></label>
         <input id="game-name" type="text" name="game-name" placeholder="게임 이름을 입력하세요" aria-describedby="name-error">
         <p id="name-error" class="error-message" aria-live="polite"></p>
-        <button id="name-next" type="button">다음</button>
+        <button id="name-next" type="button">다음 단계로</button>
       </section>
 
       <section class="step" data-step="2" hidden>
-        <h3>게임 장르를 선택해 주세요.</h3>
+        <h3>2단계: 게임 장르 선택</h3>
 
         <fieldset id="game-options">
-          <legend>장르</legend>
+          <legend>장르 선택 (라디오 버튼)</legend>
           <label><input type="radio" name="game-type" value="action"> 액션</label>
           <label><input type="radio" name="game-type" value="adventure"> 어드벤처</label>
           <label><input type="radio" name="game-type" value="rpg" checked> RPG</label>
@@ -165,67 +161,64 @@
         </fieldset>
 
         <div class="step-actions">
-          <button id="game-prev" type="button">이전</button>
-          <button id="game-next" type="button">내용 확인하기</button>
+          <button id="game-prev" type="button">이전 단계로</button>
+          <button id="game-next" type="button">선택 내용 확인하기</button>
         </div>
       </section>
 
       <section class="step" data-step="3" hidden>
-        <h3>검색 내용 확인</h3>
+        <h3>3단계: 검색 내용 확인</h3>
         <div class="summary-list">
           <div><span>게임 제목</span><strong id="summary-title"></strong></div>
           <div><span>게임 장르</span><strong id="summary-type"></strong></div>
         </div>
         <div class="step-actions">
-          <button id="summary-prev" type="button">수정하기</button>
+          <button id="summary-prev" type="button">입력 수정하기</button>
           <button id="finish-button" type="button">검색 실행</button>
         </div>
       </section>
 
-      <!-- Step 4: 검색 완료 및 위시리스트 추가 (새로운 응용 기능) -->
+      <!-- Step 4: 검색 완료 및 위시리스트 추가 -->
       <section class="step" data-step="4" hidden>
-        <h3>검색 완료</h3>
+        <h3>4단계: 검색 완료</h3>
         <p>조건에 맞는 게임을 찾았습니다!</p>
         <div class="result-card"
           style="padding: 16px; border: 1px solid #deddea; border-radius: 10px; margin-bottom: 16px; background-color: #f4f3ff;">
           <h4 id="result-game-title" style="margin: 0 0 8px 0;"></h4>
           <p id="result-game-desc" style="margin: 0 0 12px 0;"></p>
-          <button id="wishlist-btn" type="button">❤️ 위시리스트 찜하기</button>
+          <!-- [접근성 개선] 찜하기 토글 버튼에 aria-pressed 적용 -->
+          <button id="wishlist-btn" type="button" aria-pressed="false">❤️ 위시리스트 찜하기</button>
         </div>
-        <button id="restart-button" type="button">다시 검색</button>
+        <button id="restart-button" type="button">처음부터 다시 검색</button>
       </section>
     </section>
 
-    <!-- 신작 게임 입점 등록 신청 폼 (새로 추가된 기능) -->
+    <!-- 신작 게임 입점 등록 신청 폼 -->
     <section id="game-registration" class="reg-section">
       <h2>신작 게임 입점 신청</h2>
       <p>개발 중이거나 출시된 게임을 GameHub에 등록하고 유저들에게 소개하세요.</p>
 
       <form id="game-reg-form" novalidate>
-        <!-- 텍스트 입력 1: 게임 이름 -->
         <div class="form-group">
-          <label for="reg-game-title">게임 이름 <span class="required">*</span></label>
-          <input type="text" id="reg-game-title" name="gameTitle" placeholder="등록할 게임 이름을 입력하세요 (최소 2글자)" required>
+          <label for="reg-game-title">게임 이름 <span class="required" aria-hidden="true">*</span><span class="sr-only">(필수 입력)</span></label>
+          <input type="text" id="reg-game-title" name="gameTitle" placeholder="등록할 게임 이름을 입력하세요 (최소 2글자)" required aria-describedby="reg-title-error">
           <p id="reg-title-error" class="error-message" aria-live="polite"></p>
         </div>
 
-        <!-- 텍스트 입력 2: 개발사/팀 이름 -->
         <div class="form-group">
-          <label for="reg-developer">개발사 / 팀명 <span class="required">*</span></label>
-          <input type="text" id="reg-developer" name="developer" placeholder="예: 인디게임 스튜디오" required>
+          <label for="reg-developer">개발사 / 팀명 <span class="required" aria-hidden="true">*</span><span class="sr-only">(필수 입력)</span></label>
+          <input type="text" id="reg-developer" name="developer" placeholder="예: 인디게임 스튜디오" required aria-describedby="reg-developer-error">
           <p id="reg-developer-error" class="error-message" aria-live="polite"></p>
         </div>
         
-        <!-- 선택 요소: 플랫폼 (체크박스 그룹) -->
         <fieldset class="form-group">
-          <legend>지원 플랫폼 (최소 1개 선택)</legend>
+          <legend>지원 플랫폼 선택 <span class="required">(최소 1개 필수)</span></legend>
           <label><input type="checkbox" name="platform" value="PC"> PC (Steam/Windows)</label>
           <label><input type="checkbox" name="platform" value="Mobile"> 모바일 (iOS/Android)</label>
           <label><input type="checkbox" name="platform" value="Console"> 콘솔 (Switch/PS)</label>
           <p id="reg-platform-error" class="error-message" aria-live="polite"></p>
         </fieldset>
 
-        <!-- 조건부 입력 영역 (체크박스 선택에 따라 나타나고 disabled 제어됨) -->
         <div class="form-group">
           <label class="checkbox-label">
             <input type="checkbox" id="is-paid-game" name="isPaid"> 유료 게임 (사전 판매/구매 필요)
@@ -238,10 +231,9 @@
           <p class="help-text">유료 게임의 경우 부가세를 포함한 원화 가격을 입력해주세요.</p>
         </div>
 
-        <!-- 제출 버튼 및 상태 안내 -->
         <div class="form-actions">
           <button type="submit" id="reg-submit-btn">입점 신청하기</button>
-          <button type="button" id="reg-reset-btn" class="btn-secondary">작성 초기화</button>
+          <button type="button" id="reg-reset-btn" class="btn-secondary">작성 내용 초기화</button>
         </div>
         <p id="reg-feedback-message" aria-live="polite"></p>
       </form>
@@ -250,16 +242,16 @@
     <section id="subscribe" class="subscribe-card">
       <h2>게임 소식 받기</h2>
       <form id="subscribe-form">
-        <label for="email">이메일</label>
-        <input type="email" id="email" name="email" required>
-        <button id="subscribe-button" type="submit">구독하기</button>
+        <label for="email">이메일 주소 <span class="required">(필수)</span></label>
+        <input type="email" id="email" name="email" required placeholder="example@email.com">
+        <button id="subscribe-button" type="submit">뉴스레터 구독하기</button>
       </form>
-      <p id="subscribe-message" aria-live="polite">이메일을 입력한 뒤 신청해주세요.</p>
+      <p id="subscribe-message" aria-live="polite">알림을 받을 이메일을 입력한 뒤 구독 버튼을 눌러주세요.</p>
     </section>
   </main>
 
   <footer>
-    <small>&copy; 2023 GameHub</small>
+    <small>&copy; 2026 GameHub. All rights reserved.</small>
   </footer>
 
 </body>

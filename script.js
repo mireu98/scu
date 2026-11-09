@@ -45,7 +45,9 @@ const startButton = document.querySelector("#startButton");
 
 function handleThemeClick() {
     const isDark = document.body.classList.toggle("dark");
-    themeButton.textContent = isDark ? "라이트 모드" : "다크 모드";
+    themeButton.textContent = isDark ? "라이트 모드 켜기" : "다크 모드 켜기";
+    // [웹 접근성] 다크모드 토글 상태에 따른 aria-pressed 속성 제어
+    themeButton.setAttribute("aria-pressed", isDark ? "true" : "false");
 }
 
 themeButton.addEventListener("click", handleThemeClick);
@@ -53,7 +55,7 @@ themeButton.addEventListener("click", handleThemeClick);
 function handleNicknameInput() {
     const maxLength = nicknameInput.maxLength;
     const currentLength = Math.min(nicknameInput.value.length, maxLength);
-    nicknameCount.textContent = currentLength + " / 10";
+    nicknameCount.textContent = `현재 입력 글자수: ${currentLength} / 10`;
 }
 
 nicknameInput.addEventListener("input", handleNicknameInput);
@@ -62,7 +64,7 @@ function handleAgreeChange() {
     const agreed = agreeCheck.checked;
 
     startButton.disabled = !agreed;
-    agreeMessage.textContent = agreed ? "참여할 수 있습니다." : "동의 후 참여할 수 있습니다.";
+    agreeMessage.textContent = agreed ? "상태: 참여할 수 있습니다." : "상태: 동의 후 참여할 수 있습니다.";
 
     if (agreed) {
         agreeMessage.classList.add("is-ready");
@@ -229,20 +231,23 @@ finishButton.addEventListener("click", () => {
     resultGameDesc.textContent = sample.desc;
     wishlistBtn.textContent = "❤️ 위시리스트 찜하기";
     wishlistBtn.style.backgroundColor = "#635bff";
+    wishlistBtn.setAttribute("aria-pressed", "false");
 
     showStep(3);
 });
 
-// 4단계 토글
+// 4단계 토글 (웹 접근성 aria-pressed 반영)
 let isWishlisted = false;
 wishlistBtn.addEventListener("click", () => {
     isWishlisted = !isWishlisted;
     if (isWishlisted) {
         wishlistBtn.textContent = "💖 위시리스트 찜 완료!";
         wishlistBtn.style.backgroundColor = "#245c3a";
+        wishlistBtn.setAttribute("aria-pressed", "true");
     } else {
         wishlistBtn.textContent = "❤️ 위시리스트 찜하기";
         wishlistBtn.style.backgroundColor = "#635bff";
+        wishlistBtn.setAttribute("aria-pressed", "false");
     }
 });
 
@@ -253,6 +258,7 @@ restartButton.addEventListener("click", () => {
     titleError.textContent = "";
     titleInput.classList.remove("has-error");
     isWishlisted = false;
+    wishlistBtn.setAttribute("aria-pressed", "false");
 
     const defaultRadio = document.querySelector('input[name="game-type"][value="rpg"]');
     if (defaultRadio) defaultRadio.checked = true;
@@ -277,8 +283,6 @@ const regFeedbackMessage = document.querySelector("#reg-feedback-message");
 const regDeveloperInput = document.querySelector("#reg-developer");
 const regDeveloperError = document.querySelector("#reg-developer-error");
 const regPlatformError = document.querySelector("#reg-platform-error");
-
-
 
 // 1. 조건부 입력 구현 (유료 게임 체크 시 가격 입력창 표시 및 활성화, 해제 시 비활성화 및 숨김)
 isPaidCheckbox.addEventListener("change", () => {
@@ -367,7 +371,10 @@ regResetBtn.addEventListener("click", () => {
     priceContainer.hidden = true;
     regPriceInput.disabled = true;
     regTitleError.textContent = "";
+    regDeveloperError.textContent = "";
+    regPlatformError.textContent = "";
     regTitleInput.classList.remove("has-error");
+    regDeveloperInput.classList.remove("has-error");
     regFeedbackMessage.textContent = "";
     regFeedbackMessage.className = "";
     regTitleInput.focus();
